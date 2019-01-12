@@ -18,11 +18,17 @@ def plotSound(x):
   plt.ylabel('amplitude')
   plt.title('FFT')
 
+def testNoiseSignal():
+  x = generateNoiseTone(T=0.05, fx=5000)
+  plotSound(x)
+
 def testSong():
   s = generateNoiseToneSeq(notes=(4,5,7,5,2), Tk=2)
   writeWav(s, "test.noise.wav")
-  plotSound(s)
 
+# ----------------------
 testSong()
+testNoiseSignal()
+# ----------------------
 
 plt.show()
