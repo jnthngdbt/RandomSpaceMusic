@@ -18,11 +18,6 @@ def writeWav(x, name, volume=0.9):
   x *= A/np.max(x) # normalize the signal to span the int16 domain
   scipy.io.wavfile.write(name, fs, x.astype(np.int16))
 
-def generateSine(T=2, fx=1000):
-  t = getTimeDomain(T)
-  x = np.sin(2*np.pi*fx*t)
-  return x
-
 def generateNoiseTone(T=2, fx=1000):
   t = getTimeDomain(T)
   N = len(t)
