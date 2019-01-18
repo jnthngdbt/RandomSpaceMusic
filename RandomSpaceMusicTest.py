@@ -24,13 +24,25 @@ def testNoiseSignal():
   x = generateNoiseTone(T=0.1, fx=5000)
   plotSound(x)
 
+def testHarmonics():
+  s = generateNoiseToneSeq(notes=(0,12,24,36), Tk=2)
+  writeWav(s, "test.harmonics.wav")
+
 def testSong():
   s = generateNoiseToneSeq(notes=(4,5,7,5,2), Tk=2)
   writeWav(s, "test.noise.wav")
 
+def testSignalTampering():
+  s = generateNoiseTone(T=8, fx=700)
+  s = tamperSignal(s, 1)
+  plotSound(s)
+  writeWav(s, "test.tamper.wav")
+
 # ----------------------
 testSong()
-testNoiseSignal()
+# testHarmonics()
+# testNoiseSignal()
+# testSignalTampering()
 # ----------------------
 
 plt.show()

@@ -42,5 +42,18 @@ def generateNoiseToneSeq(notes, Tk):
   for k in notes:
     fk = getNoteFrequency(k)
     sk = generateNoiseTone(T=Tk, fx=fk)
+    sk = tamperSignal(sk, 1)
     s = np.concatenate((s, sk))
   return s
+
+def tamperSignal(x, Tt):
+  Nt = int(Tt*fs)
+  w = scipy.signal.windows.hamming(Nt)
+
+  Nlhs = int(np.floor(0.5*Nt))
+  Nrhs = Nt - Nlhs
+
+  x[:Nlhs] *= w[:Nlhs]
+  x[-Nrhs:] *= w[-Nrhs:]
+
+  return x
