@@ -22,10 +22,10 @@ def generateNoiseTone(T=2, fx=1000):
   t = getTimeDomain(T)
   N = len(t)
 
-  df = fx/30
+  df = fx/100
   lf = (fx-df)/nyquist
   hf = (fx+df)/nyquist
-  order = 10
+  order = 20
   sos = scipy.signal.butter(order, [lf, hf], 'bandpass', output='sos')
 
   # The signal is bandpass filtered white noise.
@@ -34,15 +34,27 @@ def generateNoiseTone(T=2, fx=1000):
 
   return x
 
+def generateNoise(T=2, fx=1000):
+  t = getTimeDomain(T)
+  N = len(t)
+
+  order = 2
+  sos = scipy.signal.butter(order, (fx/nyquist), 'lowpass', output='sos')
+
+  r = np.random.rand(N)
+  x = scipy.signal.sosfilt(sos, r)
+
+  return x
+
 def getNoteFrequency(k):
-  return 2 ** (k/12) * 440
+  return 2 ** (k/12) * (440 / 4)
 
 def generateNoiseToneSeq(notes, Tk):
   s = []
   for k in notes:
     fk = getNoteFrequency(k)
     sk = generateNoiseTone(T=Tk, fx=fk)
-    sk = tamperSignal(sk, 1)
+    sk = tamperSignal(sk, 2)
     s = np.concatenate((s, sk))
   return s
 
