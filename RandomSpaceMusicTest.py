@@ -47,12 +47,30 @@ def testSignalTampering():
   plotSound(s)
   writeWav(s, "test.tamper.wav")
 
+def testKick():
+  s = []
+  for i in np.arange(10):
+    Tk = 0.05
+    fk = getNoteFrequency(A(0))
+    sk = generateSine(T=Tk, fx=fk)
+    sk = tamperSignal(sk, Tk/2)
+    s = np.concatenate((s, np.zeros(int(fs * 0.25))))
+    s = np.concatenate((s, sk))
+    s = np.concatenate((s, np.zeros(int(fs * 0.25))))
+  plotSound(s)
+
+  f = "test.kick.wav"
+  writeWav(s, f)
+  winsound.PlaySound(f, 0)
+  
+
 # ----------------------
-testSong()
+# testSong()
 # testNoise()
 # testHarmonics()
 # testNoiseToneSignal()
 # testSignalTampering()
+testKick()
 # ----------------------
 
 plt.show()
