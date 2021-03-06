@@ -60,12 +60,21 @@ def songMyNoiseNet3Major():
     writeWav(s, f, volume=0.4)
     winsound.PlaySound(f, 0)
 
+def songSamUrai():
+  f = "song.sam.urai.wav"
+  s = generateNoise(T=2*60, fx=500)
+  s = tamperSignal(s, 20)
+  writeWav(s, f, volume=1.0)
+  winsound.PlaySound(f, 0)
+
 # ----------------------
-songMyNoiseNet1Major()
+# songMyNoiseNet1Major()
 # songMyNoiseNet1Minor()
 
 # songMyNoiseNet2Minor()
 # songMyNoiseNet3Major()
+
+songSamUrai()
 
 # ----------------------
 
