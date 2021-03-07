@@ -1,4 +1,6 @@
-from RandomSpaceMusic import *
+from constants import *
+from note import *
+from song import *
 
 def plotSound(x):
   T = dt*len(x)
@@ -22,34 +24,33 @@ def plotSound(x):
 
 def testNoiseToneSignal():
   x = generateNoiseTone(T=0.1, fx=5000)
-  plotSound(x)
+  return s, "test.noise.tone.wav"
 
 def testHarmonics():
   s = generateNoiseToneSeq(notes=(0,12,24,36), Tk=2, Tf=2)
-  writeWav(s, "test.harmonics.wav")
+  return s, "test.harmonics.wav"
 
 def testSong():
   notes = [9,5,0,7]
   Tk = 5
   s = 20 * generateNoiseToneSeq(notes=notes, Tk=Tk, Tf=2)
-  s += generateNoise(T=len(notes)*Tk, fx=500)
+  s += generateNoise(T=len(notes)*Tk, fl=500)
   s = tamperSignal(s, 1)
-  writeWav(s, "test.song.wav")
+  return s, "test.song.wav"
 
 def testNoise():
-  s = generateNoise(T=10, fx=500)
+  s = generateNoise(T=10, fl=500)
   s = tamperSignal(s, 2)
-  writeWav(s, "test.noise.wav")
+  return s, "test.noise.wav"
 
 def testSignalTampering():
   s = generateNoiseTone(T=5, fx=700)
   s = tamperSignal(s, 2)
-  plotSound(s)
-  writeWav(s, "test.tamper.wav")
+  return s, "test.tamper.wav"
 
 def testKick():
   s = []
-  for i in np.arange(10):
+  for _ in np.arange(10):
     Tk = 0.05
     fk = getNoteFrequency(A(0))
     sk = generateSine(T=Tk, fx=fk)
@@ -57,20 +58,28 @@ def testKick():
     s = np.concatenate((s, np.zeros(int(fs * 0.25))))
     s = np.concatenate((s, sk))
     s = np.concatenate((s, np.zeros(int(fs * 0.25))))
-  plotSound(s)
 
-  f = "test.kick.wav"
-  writeWav(s, f)
-  winsound.PlaySound(f, 0)
+  return s, "test.kick.wav"
   
 
 # ----------------------
-# testSong()
-# testNoise()
-# testHarmonics()
-# testNoiseToneSignal()
-# testSignalTampering()
-testKick()
+s = None
+f = ""
+
+# s = testSong()
+# s, f = testNoise()
+# s = testHarmonics()
+# s = testNoiseToneSignal()
+# s = testSignalTampering()
+s, f = testKick()
 # ----------------------
 
-plt.show()
+# ----------------------
+if s is not None:
+  play(s, f)
+
+  plotSound(s)
+  plt.show()
+# ----------------------
+
+
