@@ -1,23 +1,19 @@
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
 import scipy.signal
 
 from constants import *
 
-matplotlib.style.use('dark_background')
-
-def getTimeDomain(T):
+def time(T):
   return np.arange(0,T,dt)
 
-def generateSine(T=2, fx=1000):
-  t = getTimeDomain(T)
+def sine(T=2, fx=1000):
+  t = time(T)
   x = np.sin(2*np.pi*fx*t + np.random.rand()) # add random phase
   return x
 
 # fl: low pass frequency
-def generateNoise(T=2, fl=1000):
-  t = getTimeDomain(T)
+def noise(T=2, fl=1000):
+  t = time(T)
   N = len(t)
 
   order = 2
@@ -28,8 +24,8 @@ def generateNoise(T=2, fl=1000):
 
   return x
 
-def generateNoiseTone(T=2, fx=1000, df=None):
-  t = getTimeDomain(T)
+def band(T=2, fx=1000, df=None):
+  t = time(T)
   N = len(t)
 
   if df is None:
@@ -46,7 +42,7 @@ def generateNoiseTone(T=2, fx=1000, df=None):
 
   return x
 
-def getNoteFrequency(k):
+def frequency(k):
   d = 8 # 4
   return 2 ** (k/octave) * (440 / d)
 
@@ -56,9 +52,9 @@ def getNoteFrequency(k):
 def generateSineSeq(notes, Tk, Tf):
   s = []
   for k in notes:
-    fk = getNoteFrequency(k)
-    sk = generateSine(T=Tk, fx=fk)
-    sk = tamperSignal(sk, Tf)
+    fk = frequency(k)
+    sk = sine(T=Tk, fx=fk)
+    sk = tamper(sk, Tf)
     s = np.concatenate((s, sk))
   return s
 
@@ -68,15 +64,15 @@ def generateSineSeq(notes, Tk, Tf):
 def generateNoiseToneSeq(notes, Tk, Tf):
   s = []
   for k in notes:
-    fk = getNoteFrequency(k)
-    sk = generateNoiseTone(T=Tk, fx=fk)
-    sk = tamperSignal(sk, Tf)
+    fk = frequency(k)
+    sk = band(T=Tk, fx=fk)
+    sk = tamper(sk, Tf)
     s = np.concatenate((s, sk))
   return s
 
 # x: signal to tamper
 # Tt: sum of tamper period left and right
-def tamperSignal(x, Tt, type='hann'):
+def tamper(x, Tt, type='hann'):
   Nt = int(Tt*fs)
   w = scipy.signal.windows.get_window(type, Nt)
 
@@ -88,7 +84,7 @@ def tamperSignal(x, Tt, type='hann'):
 
   return x
 
-def addSimpleReverb(x, delay=4000, decay=0.8):
+def reverb(x, delay=4000, decay=0.8):
   for i in np.arange(delay, len(x)):
     x[i-delay] = decay * x[i]
   return x
