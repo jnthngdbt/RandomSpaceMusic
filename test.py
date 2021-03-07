@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from constants import *
 import note
+import track
 from song import *
 
 matplotlib.style.use('dark_background')
@@ -33,13 +34,13 @@ def testNoiseToneSignal():
   return s, "test.noise.tone.wav"
 
 def testHarmonics():
-  s = note.generateNoiseToneSeq(notes=(0,12,24,36), Tk=2, Tf=2)
+  s = track.band(notes=(0,12,24,36), Tk=2, Tf=2)
   return s, "test.harmonics.wav"
 
 def testSong():
   notes = [9,5,0,7]
   Tk = 5
-  s = 20 * note.generateNoiseToneSeq(notes=notes, Tk=Tk, Tf=2)
+  s = 20 * track.band(notes=notes, Tk=Tk, Tf=2)
   s += note.noise(T=len(notes)*Tk, fl=500)
   s = note.tamper(s, 1)
   return s, "test.song.wav"

@@ -6,6 +6,9 @@ from constants import *
 def time(T):
   return np.arange(0,T,dt)
 
+def midi(T=2, k=20):
+  return sine(T, frequency(k))
+
 def sine(T=2, fx=1000):
   t = time(T)
   x = np.sin(2*np.pi*fx*t + np.random.rand()) # add random phase
@@ -45,30 +48,6 @@ def band(T=2, fx=1000, df=None):
 def frequency(k):
   d = 8 # 4
   return 2 ** (k/octave) * (440 / d)
-
-# notes: array of note indexes
-# Tk: duration of each note (s)
-# Tf: duration of fading in and out (s)
-def generateSineSeq(notes, Tk, Tf):
-  s = []
-  for k in notes:
-    fk = frequency(k)
-    sk = sine(T=Tk, fx=fk)
-    sk = tamper(sk, Tf)
-    s = np.concatenate((s, sk))
-  return s
-
-# notes: array of note indexes
-# Tk: duration of each note (s)
-# Tf: duration of fading in and out (s)
-def generateNoiseToneSeq(notes, Tk, Tf):
-  s = []
-  for k in notes:
-    fk = frequency(k)
-    sk = band(T=Tk, fx=fk)
-    sk = tamper(sk, Tf)
-    s = np.concatenate((s, sk))
-  return s
 
 # x: signal to tamper
 # Tt: sum of tamper period left and right
