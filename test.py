@@ -70,12 +70,12 @@ def testKick():
 
 def testChordMajor():
   s = []
-  s = chord.major(T=5, root=midi.F(1), notes=[1, 3, 5, 8], Tf=1)
+  s = chord.major(T=5, Tf=1, root=midi.F(1), notes=[1, 3, 5, 8], amps=[1., .8, .8, .6])
   return s, "test.chord.major.wav"
 
 def testChordMinor():
   s = []
-  s = chord.minor(T=5, root=midi.A(1), notes=[1, 3, 5, 8], Tf=1)
+  s = chord.minor(T=5, Tf=1, root=midi.A(1), notes=[1, 3, 5, 8], amps=[4., .8, .8, .6])
   return s, "test.chord.minor.wav"
 
 # ----------------------
@@ -85,8 +85,8 @@ def testChordMinor():
 # s, f = testNoiseToneSignal()
 # s, f = testSignalTampering()
 # s, f = testKick()
-s, f = testChordMajor()
-# s, f = testChordMinor()
+# s, f = testChordMajor()
+s, f = testChordMinor()
 # ----------------------
 song.play(s, f)
 # plotSound(s)

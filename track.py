@@ -15,7 +15,7 @@ def sine(notes, Tk, Tf):
     fk = midi.freq(k)
     sk = note.sine(T=Tk, fx=fk)
     sk = note.tamper(sk, Tf)
-    s = np.concatenate((s, sk))
+    s = append(s, sk)
   return s
 
 # notes: array of note indexes
@@ -27,5 +27,5 @@ def band(notes, Tk, Tf):
     fk = midi.freq(k)
     sk = note.band(T=Tk, fx=fk)
     sk = note.tamper(sk, Tf)
-    s = np.concatenate((s, sk))
+    s = append(s, sk)
   return s
