@@ -3,9 +3,11 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 from constants import *
+import midi
 import note
+import chord
 import track
-from song import *
+import song
 
 matplotlib.style.use('dark_background')
 
@@ -59,7 +61,7 @@ def testKick():
   s = []
   for _ in np.arange(10):
     Tk = 0.05
-    fk = note.frequency(note.A(0))
+    fk = midi.freq(midi.A(0))
     sk = note.sine(T=Tk, fx=fk)
     sk = note.tamper(sk, Tk/2)
     s = np.concatenate((s, np.zeros(int(fs * 0.25))))
@@ -67,19 +69,32 @@ def testKick():
     s = np.concatenate((s, np.zeros(int(fs * 0.25))))
 
   return s, "test.kick.wav"
-  
+
+def testChordMajor():
+  s = []
+  s = chord.major(T=5, root=midi.F(1), notes=[1, 3, 5, 8])
+  s = note.tamper(s, 1)
+  return s, "test.chord.major.wav"
+
+def testChordMinor():
+  s = []
+  s = chord.minor(T=5, root=midi.A(1), notes=[1, 3, 5, 8])
+  s = note.tamper(s, 1)
+  return s, "test.chord.minor.wav"
 
 # ----------------------
-s, f = testSong()
+# s, f = testSong()
 # s, f = testNoise()
 # s, f = testHarmonics()
 # s, f = testNoiseToneSignal()
 # s, f = testSignalTampering()
 # s, f = testKick()
+s, f = testChordMajor()
+# s, f = testChordMinor()
 # ----------------------
-play(s, f)
-plotSound(s)
-plt.show()
+song.play(s, f)
+# plotSound(s)
+# plt.show()
 # ----------------------
 
 

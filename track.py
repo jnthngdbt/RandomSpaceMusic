@@ -1,5 +1,6 @@
 import numpy as np
 
+import midi
 import note
 
 # notes: array of note indexes
@@ -8,7 +9,7 @@ import note
 def sine(notes, Tk, Tf):
   s = []
   for k in notes:
-    fk = note.frequency(k)
+    fk = midi.freq(k)
     sk = note.sine(T=Tk, fx=fk)
     sk = note.tamper(sk, Tf)
     s = np.concatenate((s, sk))
@@ -20,7 +21,7 @@ def sine(notes, Tk, Tf):
 def band(notes, Tk, Tf):
   s = []
   for k in notes:
-    fk = note.frequency(k)
+    fk = midi.freq(k)
     sk = note.band(T=Tk, fx=fk)
     sk = note.tamper(sk, Tf)
     s = np.concatenate((s, sk))

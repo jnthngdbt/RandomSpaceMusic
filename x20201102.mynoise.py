@@ -1,6 +1,11 @@
+import numpy as np
+
+from constants import *
+
+import midi
 import note
 import track
-from song import *
+import song
 
 def generateMyNoiseTrack(notes):
   Tk = 8 # s, for each note
@@ -13,37 +18,14 @@ def generateMyNoiseTrack(notes):
   return s
 
 def songMyNoiseNet1Major():
-  r1 = 30.0 * note.band(T=32, fx=note.frequency(note.Cs(2)))
-  h1 = 1.0 * generateMyNoiseTrack(notes=note.flat([ note.B(1), note.G(0),  note.D(1), note.A(1)])) # flat([B(1), G(0), D(1), A(1)]) # sharp([A(1), F(0), C(1), G(0)])
-  h2 = 0.7 * generateMyNoiseTrack(notes=note.flat([note.Gb(1), note.B(1), note.Gb(1), note.E(1)])) # flat([Gb(1), G(1), Gb(1), E(1)]) # sharp([E(1), F(1), E(1), D(1)])
-  h3 = 0.3 * generateMyNoiseTrack(notes=note.flat([ note.D(1), note.D(1),  note.A(1), note.Db(1)])) # flat([Gb(1), G(1), Gb(1), E(1)]) # sharp([E(1), F(1), E(1), D(1)])
+  r1 = 30.0 * note.band(T=32, fx=midi.freq(midi.Cs(2)))
+  h1 = 1.0 * generateMyNoiseTrack(notes=midi.flat([ midi.B(1), midi.G(0),  midi.D(1), midi.A(1)])) # flat([B(1), G(0), D(1), A(1)]) # sharp([A(1), F(0), C(1), G(0)])
+  h2 = 0.7 * generateMyNoiseTrack(notes=midi.flat([midi.Gb(1), midi.B(1), midi.Gb(1), midi.E(1)])) # flat([Gb(1), G(1), Gb(1), E(1)]) # sharp([E(1), F(1), E(1), D(1)])
+  h3 = 0.3 * generateMyNoiseTrack(notes=midi.flat([ midi.D(1), midi.D(1),  midi.A(1), midi.Db(1)])) # flat([Gb(1), G(1), Gb(1), E(1)]) # sharp([E(1), F(1), E(1), D(1)])
   s = r1 + h1 + h2 + h3
   return s, "song.mynoise.net.1.major.wav"
-
-def songMyNoiseNet1Minor():
-  s = generateMyNoiseTrack(notes=note.sharp([note.C(1), note.Gs(0), note.Ds(1), note.G(0)]))
-  return s, "song.mynoise.net.1.minor.wav"
-
-def songMyNoiseNet2Minor():
-  s = 1.0 * generateMyNoiseTrack(notes=[note.Db(1),note.Db(1),note.A(1),note.Cb(1)])
-  s += 0.6 * generateMyNoiseTrack(notes=[note.Db(1),note.Db(1),note.Db(1),note.Eb(1)])
-  s += 0.4 * generateMyNoiseTrack(notes=[note.Ab(2),note.Ab(2),note.Fb(1),note.Gb(1)])
-  return s, "song.mynoise.net.2.minor.wav"
-
-def songMyNoiseNet3Major():
-  s = 1.0 * generateMyNoiseTrack(notes=note.flat([note.Gb(0),note.D(1),note.A(1),note.E(0)]))
-  return s, "song.mynoise.net.3.major.wav"
 
 # ----------------------
 
 s, f = songMyNoiseNet1Major()
-# s, f = songMyNoiseNet1Minor()
-
-# s, f = songMyNoiseNet2Minor()
-# s, f = songMyNoiseNet3Major()
-
-# ----------------------
-
-loop(s, f)
-
-# ----------------------
+song.loop(s, f)

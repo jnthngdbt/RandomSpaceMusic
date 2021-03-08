@@ -1,5 +1,5 @@
 import note
-from song import *
+import song
 
 def songSamUrai():
   s = note.noise(T=2*60, fl=500)
@@ -7,4 +7,4 @@ def songSamUrai():
   return s, "song.sam.urai.wav"
 
 s, f = songSamUrai()
-play(s, f)
+song.play(s, f)

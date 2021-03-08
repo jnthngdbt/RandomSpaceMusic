@@ -5,9 +5,9 @@ import winsound
 
 from constants import *
 
-def write(x, name, volume=0.9):
-  A = volume * 2**15 # int16 scale factor; 2^16/2, since signed
-  x *= A/np.max(x) # normalize the signal to span the int16 domain
+def write(x, name, volume=1.0):
+  A = volume * (2**15-1) # int16 scale factor; 2^16/2, since signed, -1 to avoid saturation
+  x *= A/np.max(np.abs(x)) # normalize the signal to span the int16 domain
   scipy.io.wavfile.write(name, fs, x.astype(np.int16))
 
 def loop(s, f):
