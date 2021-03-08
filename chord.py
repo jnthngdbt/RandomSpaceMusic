@@ -1,19 +1,18 @@
 import midi
 import note
 
-def major(T=2, root=0, notes=[1,3,5,8]):
-  s = note.silent(T)
-  for n in notes:
-    k = midi.major(root, n)
-    f = midi.freq(k)
-    s += note.sine(T, f)
-  return s
+from constants import *
 
-def minor(T=2, root=0, notes=[1,3,5,8]):
+def major(T=2, root=0, notes=[1,3,5,8], Tf=0):
+  return signal(scales["major"], T, root, notes, Tf)
+
+def minor(T=2, root=0, notes=[1,3,5,8], Tf=0):
+  return signal(scales["minor"], T, root, notes, Tf)
+  
+def signal(scale, T=2, root=0, notes=[1,3,5,8], Tf=0):
   s = note.silent(T)
   for n in notes:
-    k = midi.minor(root, n)
+    k = midi.number(root, n, scale)
     f = midi.freq(k)
-    s += note.sine(T, f)
+    s += note.sine(T, f, Tf)
   return s
-  

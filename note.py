@@ -14,13 +14,15 @@ def length(T):
 def silent(T=2):
   return np.zeros(length(T))
 
-def sine(T=2, fx=1000):
+# Tf: fade in/out total
+def sine(T=2, fx=1000, Tf=0):
   t = time(T)
   x = np.sin(2*np.pi*fx*t + np.random.rand()) # add random phase
+  x = tamper(x, Tf)
   return x
 
 # fl: low pass frequency
-def noise(T=2, fl=1000):
+def noise(T=2, fl=1000, Tf=0):
   t = time(T)
   N = len(t)
 
@@ -29,10 +31,10 @@ def noise(T=2, fl=1000):
 
   r = np.random.rand(N)
   x = scipy.signal.sosfilt(sos, r)
-
+  x = tamper(x, Tf)
   return x
 
-def band(T=2, fx=1000, df=None):
+def band(T=2, fx=1000, df=None, Tf=0):
   t = time(T)
   N = len(t)
 
@@ -47,20 +49,21 @@ def band(T=2, fx=1000, df=None):
   # The signal is bandpass filtered white noise.
   r = np.random.rand(N)
   x = scipy.signal.sosfilt(sos, r)
-
+  x = tamper(x, Tf)
   return x
 
 # x: signal to tamper
 # Tt: sum of tamper period left and right
 def tamper(x, Tt, type='hann'):
-  Nt = int(Tt*fs)
-  w = scipy.signal.windows.get_window(type, Nt)
+  if Tt > 0:
+    Nt = int(Tt*fs)
+    w = scipy.signal.windows.get_window(type, Nt)
 
-  Nlhs = int(np.floor(0.5*Nt))
-  Nrhs = Nt - Nlhs
+    Nlhs = int(np.floor(0.5*Nt))
+    Nrhs = Nt - Nlhs
 
-  x[:Nlhs] *= w[:Nlhs]
-  x[-Nrhs:] *= w[-Nrhs:]
+    x[:Nlhs] *= w[:Nlhs]
+    x[-Nrhs:] *= w[-Nrhs:]
 
   return x
 

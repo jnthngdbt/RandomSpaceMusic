@@ -1,4 +1,4 @@
-
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -53,8 +53,7 @@ def testNoise():
   return s, "test.noise.wav"
 
 def testSignalTampering():
-  s = note.band(T=5, fx=700)
-  s = note.tamper(s, 2)
+  s = note.band(T=5, fx=700, Tf=2)
   return s, "test.tamper.wav"
 
 def testKick():
@@ -62,24 +61,21 @@ def testKick():
   for _ in np.arange(10):
     Tk = 0.05
     fk = midi.freq(midi.A(0))
-    sk = note.sine(T=Tk, fx=fk)
-    sk = note.tamper(sk, Tk/2)
-    s = np.concatenate((s, np.zeros(int(fs * 0.25))))
-    s = np.concatenate((s, sk))
-    s = np.concatenate((s, np.zeros(int(fs * 0.25))))
+    sk = note.sine(T=Tk, fx=fk, Tf=Tk/2)
+    s = track.append(s, np.zeros(int(fs * 0.25)))
+    s = track.append(s, sk)
+    s = track.append(s, np.zeros(int(fs * 0.25)))
 
   return s, "test.kick.wav"
 
 def testChordMajor():
   s = []
-  s = chord.major(T=5, root=midi.F(1), notes=[1, 3, 5, 8])
-  s = note.tamper(s, 1)
+  s = chord.major(T=5, root=midi.F(1), notes=[1, 3, 5, 8], Tf=1)
   return s, "test.chord.major.wav"
 
 def testChordMinor():
   s = []
-  s = chord.minor(T=5, root=midi.A(1), notes=[1, 3, 5, 8])
-  s = note.tamper(s, 1)
+  s = chord.minor(T=5, root=midi.A(1), notes=[1, 3, 5, 8], Tf=1)
   return s, "test.chord.minor.wav"
 
 # ----------------------

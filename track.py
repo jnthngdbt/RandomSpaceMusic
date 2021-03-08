@@ -3,6 +3,9 @@ import numpy as np
 import midi
 import note
 
+def append(track, s):
+  return np.concatenate((track, s))
+
 # notes: array of note indexes
 # Tk: duration of each note (s)
 # Tf: duration of fading in and out (s)
