@@ -6,6 +6,11 @@ import note
 def append(track, s):
   return np.concatenate((track, s))
 
+def add(s, t):
+  if len(s) == 0: return t
+  if len(s) != len(t): raise NameError("Added track size must match size.")
+  return s + t
+
 def riff(chords=[]):
   t = []
   for c in chords:
