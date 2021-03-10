@@ -32,7 +32,7 @@ def plotSound(x):
   plt.title('FFT')
 
 def testNoiseToneSignal():
-  x = note.band(T=0.1, fx=5000)
+  s = note.band(T=0.1, fx=5000)
   return s, "test.noise.tone.wav"
 
 def testHarmonics():
@@ -48,9 +48,16 @@ def testSong():
   return s, "test.song.wav"
 
 def testNoise():
-  s = note.noise(T=10, fl=500)
-  s = note.tamper(s, 2)
+  s = note.noise(T=10, fl=500, Tf=2)
   return s, "test.noise.wav"
+
+def testBand():
+  s = note.band(T=5, Tf=1, fx=midi.freq(midi.Cs(4)), df=30)
+  return s, "test.band.wav"
+
+def testPeak():
+  s = note.peak(T=5, Tf=1, fx=midi.freq(midi.Cs(4)), q=5)
+  return s, "test.peak.wav"
 
 def testSignalTampering():
   s = note.band(T=5, fx=700, Tf=2)
@@ -69,18 +76,18 @@ def testKick():
   return s, "test.kick.wav"
 
 def testChordMajor():
-  s = []
-  s = chord.major(T=5, Tf=1, root=midi.F(1), notes=[1, 3, 5, 8], amps=[1., .8, .8, .6])
+  s = chord.major(T=5, Tf=1, root=midi.F(1), notes=[1, 3, 5, 8], amps=[100, 80, 80, 60])
   return s, "test.chord.major.wav"
 
 def testChordMinor():
-  s = []
   s = chord.minor(T=5, Tf=1, root=midi.A(1), notes=[1, 3, 5, 8], amps=[4., .8, .8, .6])
   return s, "test.chord.minor.wav"
 
 # ----------------------
 # s, f = testSong()
 # s, f = testNoise()
+# s, f = testBand()
+s, f = testPeak()
 # s, f = testHarmonics()
 # s, f = testNoiseToneSignal()
 # s, f = testSignalTampering()

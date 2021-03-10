@@ -11,6 +11,9 @@ def time(T):
 def length(T):
   return fs*T
 
+def duration(x):
+  return len(x)/fs
+
 def silent(T=2):
   return np.zeros(length(T))
 
@@ -52,6 +55,26 @@ def band(T=2, fx=1000, df=None, Tf=0):
   x = tamper(x, Tf)
   return x
 
+def peak(T=2, fx=1000, q=5, Tf=0):
+  t = time(T)
+  N = len(t)
+
+  df = fs/N
+  bw = fx/q
+  Nw = 2 * int(0.5 * bw/df) # enforce even
+  w = scipy.signal.windows.get_window('hann', Nw)
+  phases = np.exp(1j*np.random.uniform(0, 2*np.pi, (Nw,)))
+
+  X = np.zeros((N,), dtype=complex)
+  fi = fx/df
+  i1 = max(int(fi-0.5*Nw), 0)
+  i2 = min(int(fi+0.5*Nw), N-1)
+  X[i1:i2] = w * phases
+  x = np.fft.ifft(X).real
+
+  x = tamper(x, Tf)
+  return x
+
 # x: signal to tamper
 # Tt: sum of tamper period left and right
 def tamper(x, Tt, type='hann'):
@@ -65,6 +88,12 @@ def tamper(x, Tt, type='hann'):
     x[:Nlhs] *= w[:Nlhs]
     x[-Nrhs:] *= w[-Nrhs:]
 
+  return x
+
+def normalize(x):
+  m = np.max(np.abs(x))
+  if m > 0.0:
+    x = np.array(x) / m
   return x
 
 def reverb(x, delay=4000, decay=0.8):

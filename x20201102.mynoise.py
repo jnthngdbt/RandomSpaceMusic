@@ -28,20 +28,24 @@ def songMyNoiseNet1Major():
 
 def songMyNoiseAFCG():
   Tk = 8 # s, for each note
-  Tf = 8
-  T = 4 * Tk
-
-  amps = [1., .7, .3]
-  A = chord.minor(T=Tk, Tf=Tf, root=midi.As(1), notes=[1, 5, 3], amps=amps)
-  F = chord.major(T=Tk, Tf=Tf, root=midi.Fs(0), notes=[1, 3, 5], amps=amps)
-  C = chord.major(T=Tk, Tf=Tf, root=midi.Cs(0), notes=[8, 10, 5], amps=amps)
-  G = chord.major(T=Tk, Tf=Tf, root=midi.Gs(0), notes=[1, 5, 3], amps=amps)
-
-  drone = 20.0 * note.band(T=T, fx=midi.freq(midi.Cs(2)))
+  Tf = Tk
 
   s = []
-  s = song.add(s, track.riff([A, F, C, G]))
-  s = song.add(s, drone)
+  t = []
+
+  t = track.append(t, chord.minor(T=Tk, Tf=Tf, root=midi.As(1), notes=[1, 3, 5, 8, 10], amps=[3, 1, 2, 1, 1]))
+  t = track.append(t, chord.major(T=Tk, Tf=Tf, root=midi.Fs(0), notes=[5, 8, 10, 12], amps=[2, 3, 2, 1]))
+  t = track.append(t, chord.major(T=Tk, Tf=Tf, root=midi.Cs(1), notes=[1, 3, 5, 8, 10], amps=[3, 3, 3, 2, 1]))
+  t = track.append(t, chord.major(T=Tk, Tf=Tf, root=midi.Gs(0), notes=[3, 5, 8, 10], amps=[3, 3, 2, 1]))
+
+  s = track.add(s, t)
+  t = []
+
+  t = track.add(t, 300. * note.peak(T=note.duration(s), Tf=2, fx=midi.freq(midi.Cs(4)), q=5))
+  t = track.add(t, 600. * note.peak(T=note.duration(s), Tf=2, fx=midi.freq(midi.Cs(3)), q=8))
+
+  s = track.add(s, t)
+  t = []
 
   return s, "song.mynoise.net.afcg.wav"
 

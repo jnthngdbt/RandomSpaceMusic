@@ -20,4 +20,6 @@ def signal(scale, T=2, root=0, notes=[1,3,5,8], Tf=0, amps=[]):
     k = midi.number(root, n, scale)
     f = midi.freq(k)
     s += amps[i] * note.sine(T, f, Tf)
+
+  s = note.normalize(s)
   return s
