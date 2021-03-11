@@ -15,7 +15,7 @@ def duration(x):
   return len(x)/fs
 
 def silent(T=2):
-  return np.zeros(length(T))
+  return np.zeros(int(length(T)))
 
 # Tf: fade in/out total
 def sine(T=2, fx=1000, Tf=0):

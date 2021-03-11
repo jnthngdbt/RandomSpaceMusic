@@ -13,9 +13,9 @@ def write(x, name, volume=1.0):
 def loop(s, f):
   play(s, f, loop=True)
 
-def play(s, f, loop=False):
+def play(s, f, volume=1.0, loop=False):
   f = "./songs/" + f
-  write(s, f, volume=1.0)
+  write(s, f, volume=volume)
   play = True
   while (play):
     winsound.PlaySound(f, 0)

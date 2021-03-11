@@ -83,17 +83,31 @@ def testChordMinor():
   s = chord.minor(T=5, Tf=1, root=midi.A(1), notes=[1, 3, 5, 8], amps=[4., .8, .8, .6])
   return s, "test.chord.minor.wav"
 
+def testPeakChord():
+  T = 8
+  Tf = 4
+  q = 14
+  f0 = 1
+
+  s = []
+  s = track.add(s, 6 * note.peak(T=T, Tf=Tf, fx=midi.freq(midi.G(f0 + 0)), q=q))
+  s = track.add(s, 4 * note.peak(T=T, Tf=Tf, fx=midi.freq(midi.D(f0 + 1)), q=q))
+  s = track.add(s, 2 * note.peak(T=T, Tf=Tf, fx=midi.freq(midi.G(f0 + 1)), q=q))
+  s = track.add(s, 1 * note.peak(T=T, Tf=Tf, fx=midi.freq(midi.B(f0 + 2)), q=q))
+  return s, "test.peak.chord.wav"
+
 # ----------------------
 # s, f = testSong()
 # s, f = testNoise()
 # s, f = testBand()
-s, f = testPeak()
+# s, f = testPeak()
 # s, f = testHarmonics()
 # s, f = testNoiseToneSignal()
 # s, f = testSignalTampering()
 # s, f = testKick()
 # s, f = testChordMajor()
-s, f = testChordMinor()
+# s, f = testChordMinor()
+s, f = testPeakChord()
 # ----------------------
 song.play(s, f)
 # plotSound(s)
