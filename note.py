@@ -97,6 +97,6 @@ def normalize(x):
   return x
 
 def reverb(x, delay=4000, decay=0.8):
-  for i in np.arange(delay, len(x)):
-    x[i-delay] = decay * x[i]
+  for i in np.arange(0, len(x)-delay):
+    x[i+delay] = x[i+delay] + decay * x[i]
   return x
