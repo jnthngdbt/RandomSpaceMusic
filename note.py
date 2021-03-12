@@ -55,7 +55,7 @@ def band(T=2, fx=1000, df=None, Tf=0):
   x = tamper(x, Tf)
   return x
 
-def peak(T=2, fx=1000, q=5, Tf=0):
+def peak(T=2, fx=1000, q=42, Tf=0):
   t = time(T)
   N = len(t)
 
@@ -63,7 +63,7 @@ def peak(T=2, fx=1000, q=5, Tf=0):
   bw = fx/q
   Nw = 2 * int(0.5 * bw/df) # enforce even
   w = scipy.signal.windows.get_window('hann', Nw)
-  phases = np.exp(1j*np.random.uniform(0, 2*np.pi, (Nw,)))
+  phases = np.exp(1j*np.random.uniform(0, 0.2*np.pi, (Nw,)))
 
   X = np.zeros((N,), dtype=complex)
   fi = fx/df

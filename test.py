@@ -56,7 +56,7 @@ def testBand():
   return s, "test.band.wav"
 
 def testPeak():
-  s = note.peak(T=5, Tf=1, fx=midi.freq(midi.Cs(4)), q=5)
+  s = note.peak(T=5, Tf=1, fx=midi.freq(midi.Cs(4)), q=10)
   return s, "test.peak.wav"
 
 def testSignalTampering():
@@ -100,14 +100,14 @@ def testPeakChord():
 # s, f = testSong()
 # s, f = testNoise()
 # s, f = testBand()
-# s, f = testPeak()
+s, f = testPeak()
 # s, f = testHarmonics()
 # s, f = testNoiseToneSignal()
 # s, f = testSignalTampering()
 # s, f = testKick()
 # s, f = testChordMajor()
 # s, f = testChordMinor()
-s, f = testPeakChord()
+# s, f = testPeakChord()
 # ----------------------
 song.play(s, f)
 # plotSound(s)

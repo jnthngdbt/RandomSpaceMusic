@@ -11,8 +11,7 @@ def add(s, t):
   if len(s) != len(t): raise NameError("Added track size must match size.")
   return s + t
 
-def riff(chords=[]):
-  t = []
+def riff(t, chords=[]):
   for c in chords:
     t = append(t, c)
   return t
