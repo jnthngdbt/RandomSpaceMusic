@@ -1,6 +1,4 @@
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
 
 from constants import *
 import midi
@@ -8,28 +6,7 @@ import note
 import chord
 import track
 import song
-
-matplotlib.style.use('dark_background')
-
-def plotSound(x):
-  T = dt*len(x)
-  t = note.time(T)
-
-  plt.figure()
-
-  plt.subplot(1,2,1)
-  plt.plot(t, x, '.-', markersize=3, linewidth=1)
-  plt.xlabel('time (s)')
-  plt.ylabel('sound')
-
-  f = np.fft.fftfreq(len(x), dt)
-  F = np.fft.fft(x)
-
-  plt.subplot(1,2,2)
-  plt.plot(f, np.abs(F), '.-', markersize=3, linewidth=1)
-  plt.xlabel('frequency (Hz)')
-  plt.ylabel('amplitude')
-  plt.title('FFT')
+import utils
 
 def testNoiseToneSignal():
   s = note.band(T=0.1, fx=5000)
@@ -110,8 +87,7 @@ s, f = testPeak()
 # s, f = testPeakChord()
 # ----------------------
 song.play(s, f)
-# plotSound(s)
-# plt.show()
+utils.plot(s)
 # ----------------------
 
 
