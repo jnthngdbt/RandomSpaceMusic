@@ -55,7 +55,7 @@ def band(T=2, fx=1000, df=None, Tf=0):
   x = tamper(x, Tf)
   return x
 
-def peak(T=2, fx=1000, q=42, Tf=0):
+def peak(T=2, fx=1000, q=32, Tf=0):
   t = time(T)
   N = len(t)
 
