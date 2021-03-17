@@ -24,7 +24,7 @@ def songSamUrai():
   Tf = Tk
   f0 = 1
   type = 'peak'
-  k = 0.22 # harmonics amplitude damp factor (higher: less highs)
+  k = 0.23 # harmonics amplitude damp factor (higher: less highs)
 
   notes, amps = tone([1, 3, 5], k)
 
@@ -50,4 +50,4 @@ def songSamUrai():
   return s, "song.sam.urai.wav"
 
 s, f = songSamUrai()
-song.play(s, f, volume=0.8)
+song.play(s, f, volume=0.4)
