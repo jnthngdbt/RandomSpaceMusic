@@ -50,4 +50,4 @@ def songSamUrai():
   return s, "song.sam.urai.wav"
 
 s, f = songSamUrai()
-song.play(s, f, volume=0.4)
+song.play(s, f, volume=0.2)
